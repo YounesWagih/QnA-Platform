@@ -9,4 +9,13 @@ export const QuestionService = {
       },
     });
   },
+  async getUnansweredQuestionsById(id: string) {
+    return await prisma.question.findMany({
+      where: {
+        recipientId: id,
+        answer: null,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  },
 };
