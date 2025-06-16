@@ -1,6 +1,6 @@
 import prisma from '../db/PrismaClient';
 export const UserService = {
-  async getUserById(id: string) {
+  async getUserById(id: number) {
     return await prisma.user.findUnique({
       where: { id },
       select: {

@@ -4,9 +4,13 @@ import { AuthenticatedRequest } from '../middlewares/auth.middleware';
 
 export const answerQuestion = async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.id;
-  const { questionId } = req.params;
+  let questionId = +req.params.questionId;
   let { text } = req.body;
-  console.log(userId,questionId)
+
+  if (isNaN(questionId)) {
+    res.status(404).json({ error: 'question Id must be number' });
+    return;
+  }
 
   if (!userId) {
     res.status(404).json({ error: 'User not found' });
@@ -20,7 +24,7 @@ export const answerQuestion = async (req: AuthenticatedRequest, res: Response) =
   }
 
   const question = await AnswerService.findQuestionToAnswer(questionId);
-  console.log(question)
+  console.log(question);
   if (!question) {
     res.status(404).json({ error: 'Question not found' });
     return;

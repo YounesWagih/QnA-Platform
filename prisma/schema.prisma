@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   email     String   @unique
   username  String   @unique
   password  String
@@ -20,24 +20,24 @@ model User {
 }
 
 model Question {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   text      String
   createdAt DateTime @default(now())
 
   recipient   User   @relation(fields: [recipientId], references: [id])
-  recipientId String
+  recipientId Int
 
   answer Answer?
 }
 
 model Answer {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   text      String
   createdAt DateTime @default(now())
 
   question   Question @relation(fields: [questionId], references: [id])
-  questionId String @unique
+  questionId Int   @unique
 
   author   User   @relation(fields: [authorId], references: [id])
-  authorId String
+  authorId Int
 }

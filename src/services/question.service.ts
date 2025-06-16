@@ -1,7 +1,7 @@
 import prisma from '../db/PrismaClient';
 
 export const QuestionService = {
-  async create(text: string, recipientId: string) {
+  async create(text: string, recipientId: number) {
     return await prisma.question.create({
       data: {
         text,
@@ -9,7 +9,7 @@ export const QuestionService = {
       },
     });
   },
-  async getUnansweredQuestionsById(id: string) {
+  async getUnansweredQuestionsById(id: number) {
     return await prisma.question.findMany({
       where: {
         recipientId: id,
